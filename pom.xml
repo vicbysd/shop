@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.2018</groupId>
+	<artifactId>shop</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<modules>
+		
+		
+		
+		
+		
+		<module>shop.message.service</module>
+		
+		
+		
+		<module>shop.task.service</module>
+		<module>shop.command.service</module>
+		<module>shop.util</module>
+		<module>shop.stroage</module>
+		<module>shop.domain</module>
+		<module>shop.exception</module>
+		<module>shop.backend</module>
+		<module>shop.frontend</module>
+		<module>shop.usercenter</module>
+		<module>shop.payment</module>
+		<module>shop.order</module>
+		<module>shop.commondity</module>
+	</modules>
+
+	<!-- 版本配置 -->
+	<properties>
+		<jdk.version>1.8</jdk.version>
+		<junit.version>4.10</junit.version>
+		<log4j.version>1.2.14</log4j.version>
+		<spring.version>4.3.17.RELEASE</spring.version>
+		<struts2.version>2.5.5</struts2.version>
+		<hibernate.verison>5.0.11.Final</hibernate.verison>
+		<gson.version>2.2.2</gson.version>
+		<ojdbc6.version>11.2.0.1.0</ojdbc6.version>
+		<mysql.connection.verson>5.1.35</mysql.connection.verson>
+		<struts2.spring.version>2.5.16</struts2.spring.version>
+		<c3p0.version>0.9.2.1</c3p0.version>
+		<durid.version>1.0.24</durid.version>
+		<jaskson.version>2.8.9</jaskson.version>
+		<google.collections.version>1.0</google.collections.version>
+		<struts2.json.plugin.version>2.5.5</struts2.json.plugin.version>
+		<mail.version>1.4.1</mail.version>
+		<thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
+		<freemarker.version>2.3.23</freemarker.version>
+		<jedis.version>2.9.0</jedis.version>
+		<solrj.version>6.6.0</solrj.version>
+		<spring.boot.version>2.0.0.RELEASE</spring.boot.version>
+		<dobbo.version>2.6.0</dobbo.version>
+		<quartz.version>2.2.1</quartz.version>
+		<httpclient.version>4.5.2</httpclient.version>
+		<mybatis.version>3.3.1</mybatis.version>
+		<net.sf.json.version>2.4</net.sf.json.version>
+		<hibernate.jpa.version>1.0.0.Final</hibernate.jpa.version>
+		<spring.data.jpa.version>1.11.3.RELEASE</spring.data.jpa.version>
+		<servlet.version>3.0.1</servlet.version>
+		<shiro.version>1.2.3</shiro.version>
+		<jedis.version>2.9.0</jedis.version>
+		<fastjson.version>1.2.6</fastjson.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+
+	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+		
+		<dependency>
+    	<groupId>com.alibaba</groupId>
+	    	<artifactId>fastjson</artifactId>
+	    	<version>${fastjson.version}</version>
+	    </dependency>
+		
+		    <dependency>
+			    <groupId>redis.clients</groupId>
+			    <artifactId>jedis</artifactId>
+			    <version>${jedis.version}</version>
+			</dependency>
+
+			<!-- shiro begin -->
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-core</artifactId>
+				<version>${shiro.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-web</artifactId>
+				<version>${shiro.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-ehcache</artifactId>
+				<version>${shiro.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-spring</artifactId>
+				<version>${shiro.version}</version>
+			</dependency>
+			<!-- shiro end -->
+
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>servlet-api</artifactId>
+				<version>${servlet.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${mysql.connection.verson}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aspects</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-entitymanager</artifactId>
+				<version>${hibernate.verison}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.mchange</groupId>
+				<artifactId>c3p0</artifactId>
+				<version>${c3p0.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.oracle</groupId>
+				<artifactId>ojdbc6</artifactId>
+				<version>${ojdbc6.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.data</groupId>
+				<artifactId>spring-data-jpa</artifactId>
+				<version>${spring.data.jpa.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.hibernate.javax.persistence</groupId>
+				<artifactId>hibernate-jpa-2.1-api</artifactId>
+				<version>${hibernate.jpa.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.thymeleaf</groupId>
+				<artifactId>thymeleaf-spring4</artifactId>
+				<version>${thymeleaf.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-webmvc</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.google.code.gson</groupId>
+				<artifactId>gson</artifactId>
+				<version>${gson.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.google.collections</groupId>
+				<artifactId>google-collections</artifactId>
+				<version>${google.collections.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>${log4j.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>javax.mail</groupId>
+				<artifactId>mail</artifactId>
+				<version>${mail.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>net.sf.json-lib</groupId>
+				<artifactId>json-lib</artifactId>
+				<version>${net.sf.json.version}</version>
+				<classifier>jdk15</classifier>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

@@ -1,0 +1,62 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+  
+  	<!-- 配置Shiro过滤器,先让Shiro过滤系统接收到的请求 -->  
+    <!-- 通常将这段代码中的filter-mapping放在所有filter-mapping之前，以达到shiro是第一个对web请求进行拦截过滤之目的。
+    	这里的fileter-name(shiroFilter) 对应下面applicationContext.xml中的<bean id="shiroFilter" /> 
+    	DelegatingFilterProxy会自动到Spring容器中查找名字为shiroFilter的bean并把filter请求交给它处理-->  
+    <!-- 使用[/*]匹配所有请求,保证所有的可控请求都经过Shiro的过滤 -->  
+    <filter>  
+        <filter-name>shiroFilter</filter-name>  
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>  
+        <init-param>  
+            <!-- 该值缺省为false,表示生命周期由SpringApplicationContext管理,设置为true则表示由ServletContainer管理   -->
+            <param-name>targetFilterLifecycle</param-name>  
+            <param-value>true</param-value>  
+        </init-param>  
+    </filter>  
+    <filter-mapping>  
+        <filter-name>shiroFilter</filter-name>  
+        <url-pattern>/*</url-pattern>  
+    </filter-mapping>
+  
+    <!-- 配置springmvc核心控制器 -->
+  <servlet>
+  	<servlet-name>springmvc</servlet-name>
+  	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  			<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:springmvc-servlet.xml</param-value>
+		</init-param>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>springmvc</servlet-name>
+  	<url-pattern>/</url-pattern>
+  </servlet-mapping>
+  
+  <!-- 配置spring上下文监听器 -->
+  <listener>
+  	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  
+   	 <!-- 指定上下文配置文件 -->
+  	 <context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
+  
+  <!-- 配置错误页面: 应用系统发生异常时不能将异常显示个客户看，而是进入错误页面优雅的告诉客户发生的异常 -->
+  <error-page>
+  	<error-code>404</error-code>
+  	<location>/404.html</location>
+  </error-page>
+  <error-page>
+  	<error-code>500</error-code>
+  	<location>/500.html</location>
+  </error-page>
+  
+</web-app>

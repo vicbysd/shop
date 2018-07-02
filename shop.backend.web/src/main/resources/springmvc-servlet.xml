@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd 
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context.xsd 
+	http://www.springframework.org/schema/data/jpa 
+	http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+	http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/aop 
+    http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<mvc:annotation-driven></mvc:annotation-driven>
+	<mvc:default-servlet-handler />
+	<context:component-scan base-package="org.shop.backend.service,org.shop.backend.web.controller" />
+	
+	
+	   <!-- 配置数据源 
+ 	<bean id="dataSource" class="com.mchange.v2.c3p0.DriverManagerDataSource">
+ 		<property name="user" value="mail"/>
+ 		<property name="password" value="mail123"/>
+ 		<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
+ 		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver"/>
+ 	</bean>-->
+ 	
+ 	<bean id="dataSource" class="com.mchange.v2.c3p0.DriverManagerDataSource">
+ 		<property name="user" value="shop"/>
+ 		<property name="password" value="shop123"/>
+ 		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/shop"/>
+ 		<property name="driverClass" value="com.mysql.jdbc.Driver"/>
+ 	</bean>
+	
+	<bean class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" id="entityManagerFactory">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="org.shop.domain" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+		</property>
+		<property name="jpaProperties">
+			<props>
+				<!-- <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop> -->
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean class="org.springframework.orm.jpa.JpaTransactionManager" id="transactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+	
+		<!-- 配置事务切面 -->
+	<aop:config>
+		<!-- 定义事务切入点 -->
+		<aop:pointcut expression="execution(* org.shop.backend.service.*.*Impl.*(..))" id="txPointcut"/>
+		<!-- 定义事务通知 -->
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut" />
+	</aop:config>
+
+	<!-- 配置事务传播属性 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- *表示所有方法参与事务,默认事务类型为可读写，默认事务隔离级别使用数据默认隔离级别，默认传播属性REQUIRED -->
+			<!-- read-only: 表示只读事务 -->
+			<tx:method name="get*" read-only="true"/>
+			<tx:method name="find*" read-only="true"/>
+			<tx:method name="search*" read-only="true"/>
+			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+	
+	<!-- <jpa:repositories base-package="org.shop.backend.repository" entity-manager-factory-ref="entityManagerFactory" /> -->
+	
+	<jpa:repositories base-package="org.shop.backend.repository"
+        factory-class="org.shop.stroage.jpa.BaseRepositoryFactoryBean"
+        entity-manager-factory-ref="entityManagerFactory"
+        transaction-manager-ref="transactionManager" >
+    </jpa:repositories>
+	
+	<!-- 配置thymeleaf模板解析器 -->
+	<bean id="templateResolver" class="org.thymeleaf.templateresolver.ServletContextTemplateResolver">
+		<property name="prefix" value="/WEB-INF/templates/"/>
+		<property name="suffix" value=".html"/>
+		<property name="cacheable" value="true"/>
+		<property name="templateMode" value="HTML"/>
+	</bean>
+	
+	<!-- 配置thymeleaf模板引擎 -->
+	<bean id="templateEnger" class="org.thymeleaf.spring4.SpringTemplateEngine">
+		<property name="templateResolver" ref="templateResolver"/>
+	</bean>
+	
+	<!-- 配置thymeleaf视图解析器 -->
+	<bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+		<property name="templateEngine" ref="templateEnger"/>
+		<property name="contentType" value="UTF-8"/>
+		<property name="characterEncoding" value="UTF-8"/>
+	</bean>
+	
+</beans>
